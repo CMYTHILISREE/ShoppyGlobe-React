@@ -1,5 +1,7 @@
+// Import Redux Toolkit utilities for creating slices and async actions
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Define an asynchronous thunk to fetch products from an API
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async () => {
@@ -8,7 +10,7 @@ export const fetchProducts = createAsyncThunk(
       return data.products;
     }
   );
-
+// Create a slice for product state management
 const productSlice = createSlice({
     name:"products",
     initialState:{
@@ -16,8 +18,9 @@ const productSlice = createSlice({
         loading:false,
         error:null,
     },
-    reducers:{},
+    reducers:{},// No standard reducers, only async actions
     extraReducers: (builder) => {
+        // Handle additional reducers for async thunk actions
         builder.addCase(fetchProducts.pending, (state) => {
         state.loading = true;
     }).addCase(fetchProducts.fulfilled, (state, action) => {
@@ -31,5 +34,5 @@ const productSlice = createSlice({
     },
 
 });
-
+// Export the reducer for integration into the Redux store
 export default productSlice.reducer;

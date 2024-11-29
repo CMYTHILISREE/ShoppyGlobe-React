@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux';
 import "../style/ProductDetail.css"
 
 const ProductDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams();// Extracting the product ID from the URL parameters using useParams
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Initializing the dispatch function to dispatch Redux actions
 
+// useEffect hook to fetch product data when the component is mounted or when the product ID changes
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -26,7 +27,7 @@ const ProductDetail = () => {
 
     fetchProduct();
   }, [id]);
-
+  // Conditional rendering based on loading and error states
   if (loading) return <div className="loading">Loading product...</div>;
   if (error) return <div className="error">{error}</div>;
 
@@ -34,6 +35,7 @@ const ProductDetail = () => {
     <div className="product-detail">
       {product && (
         <div className="product-info">
+          <img className="product-image" src={product.thumbnail} alt={product.title}/>
           <h2 className="product-title">{product.title}</h2>
           <p className="product-description">{product.description}</p>
           <p className="product-price">${product.price}</p>
